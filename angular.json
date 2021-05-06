@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "user-management"
+  "defaultProject": "user-management",
+  "cli": {
+    "analytics": "c01cd945-b515-486a-8c42-df066155f912"
+  }
 }
