@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../model/user.model';
-import {Storage} from '../const/storage'
+import { Storage } from '../const/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +10,21 @@ import {Storage} from '../const/storage'
 export class AuthenticationService {
 
   private token: string | undefined;
-  private loggedInUsername: string | undefined 
-
+  private loggedInUsername: string | undefined;
+  
   constructor(private http: HttpClient) { }
 
   public login(user: User) {
-    return this.http.post(`${environment.API_URL}\login`, user).toPromise()
+    return this.http.post(`${environment.API_URL}\login`, user).toPromise();
   }
 
   public register(user: User) {
-    return this.http.post(`${environment.API_URL}\register`, user).toPromise()
+    return this.http.post(`${environment.API_URL}\register`, user).toPromise();
   }
 
   public logOut(): void {
-    this.token = undefined
-    this.loggedInUsername = undefined
+    this.token = undefined;
+    this.loggedInUsername = undefined;
     localStorage.removeItem(Storage.USER);
     localStorage.removeItem(Storage.TOKEN);
     localStorage.removeItem(Storage.USERS);
@@ -36,20 +36,20 @@ export class AuthenticationService {
   }
 
   public storageUser(user: User): void {
-    localStorage.setItem(Storage.USER, JSON.stringify(user))
+    localStorage.setItem(Storage.USER, JSON.stringify(user));
   }
 
   public getUserFromLocalStorage(): User | undefined {
-    let user = localStorage.getItem(Storage.USER)
-    if (user)
-      return JSON.parse(user)
-    return undefined
+    let user = localStorage.getItem(Storage.USER);
+    return user ? JSON.parse(user) : undefined
   }
 
-  public geTokenFromLocalStorage(): User | undefined {
-    let token = localStorage.getItem(Storage.TOKEN)
-    if (token)
-      return JSON.parse(token)
-    return undefined
+  public loadToken() {
+    let jwtToken = localStorage.getItem(Storage.TOKEN)
+    this.token = jwtToken ? jwtToken : undefined;
+  }
+
+  public geToken(): string | undefined {
+    return this.token;
   }
 }
