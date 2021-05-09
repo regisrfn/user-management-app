@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthenticationService } from './shared/service/authentication.service';
 import { UserService } from './shared/service/user.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { NotificationModule } from './module/notification/notification.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NotificationModule
   ],
   providers: [
     AuthenticationService,
