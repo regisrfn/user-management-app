@@ -1,0 +1,29 @@
+@import '../../sass/variables';
+
+.login {
+    background-color:$blue-accent-1;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    color: $grey-darken-1;
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+p {
+    font-size: 2rem;
+}
+
+button {
+    font-size: 2rem;
+}
+
+input {
+    font-size: 1.5rem;
+}

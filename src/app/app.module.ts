@@ -9,11 +9,13 @@ import { AuthenticationService } from './shared/service/authentication.service';
 import { UserService } from './shared/service/user.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { NotificationModule } from './module/notification/notification.module';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
