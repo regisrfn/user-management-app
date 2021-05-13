@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { User } from '../model/user.model';
 import { Storage } from '../const/storage';
+import { User } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,18 @@ export class AuthenticationService {
 
   private token: string | undefined;
   private loggedInUsername: string | undefined;
-  
+
   constructor(private http: HttpClient) { }
 
-  public login(user: User) {
-    return this.http.post(`${environment.API_URL}\login`, user).toPromise();
+  public login(user: User): Promise<HttpResponse<User>> {
+    return this.http.post<User>(`${environment.API_URL}/login`, user, {
+      observe:'response'
+    })
+      .toPromise();
   }
 
-  public register(user: User) {
-    return this.http.post(`${environment.API_URL}\register`, user).toPromise();
+  public register(user: User): Promise<User> {
+    return this.http.post<User>(`${environment.API_URL}/register`, user).toPromise();
   }
 
   public logOut(): void {
