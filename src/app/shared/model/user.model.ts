@@ -12,4 +12,5 @@ export class User {
     userId: string | undefined
     userNo: string | undefined
     username: string | undefined
+    password:string | undefined
 }
