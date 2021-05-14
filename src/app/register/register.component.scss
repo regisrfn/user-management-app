@@ -1,0 +1,22 @@
+@import "../../sass/variables";
+
+.register {
+    background-color: $blue-accent-1;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    color: $grey-darken-1;
+}
+
+.fa {
+    color: $grey-darken-1;
+}
+
+.ng-invalid:not(form) {
+    &.ng-touched{
+        box-shadow: 0 0 5px red; /* red */
+    }
+}

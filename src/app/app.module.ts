@@ -11,13 +11,15 @@ import { NotificationModule } from './module/notification/notification.module';
 import { AuthenticationService } from './shared/service/authentication.service';
 import { NotificationService } from './shared/service/notification.service';
 import { UserService } from './shared/service/user.service';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
