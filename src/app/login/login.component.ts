@@ -33,14 +33,21 @@ export class LoginComponent implements OnInit {
           this.authService.storageToken(token);
           this.authService.storageUser(res.body);
           this.authService.loadToken();
-          this.router.navigate(['/home']);
+          this.router.navigate(['/']);
         }
         this.loading = false;
       })
       .catch((err: HttpErrorResponse) => {
-        this.notificationService.notify(NotificationType.ERROR, err.error.message);
+        this.sendErrorMsg(NotificationType.ERROR, err.error.message)
         this.loading = false;
       });
+  }
+
+  private sendErrorMsg(ERROR: NotificationType, message: string) {
+    if (message)
+      this.notificationService.notify(ERROR, message);
+    else
+      this.notificationService.notify(ERROR, "An error occurred. Please try again.");
   }
 
 }

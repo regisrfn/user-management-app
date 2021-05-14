@@ -17,8 +17,8 @@
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<button type="button" class="btn btn-primary px-4" [disabled]="!loginForm.valid || loading">
-										<div *ngIf="!loading" (click)="login(loginUser)"> Login</div>
+									<button type="button" class="btn btn-primary px-4" [disabled]="!loginForm.valid || loading" (click)="login(loginUser)">
+										<div *ngIf="!loading"> Login</div>
 										<div *ngIf="loading">Loading <i class="fas fa-spinner fa-spin"></i></div>
 									</button>
 								</div>
