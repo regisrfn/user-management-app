@@ -1,3 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; //1rem = 10px, 10px/16px = 62.5%
+
+    @media only screen and (max-width: $MEDIUM-DEV) {
+        font-size: 55%;
+    }
+
+    @media only screen and (max-width: $SMALL-DEV) {
+        font-size: 50%;
+    }
+}
+
 body {
     // background: linear-gradient(315deg,$color-base,$color-top 100%);
     background-size: cover;
@@ -8,4 +32,25 @@ body {
 #app {
     margin-top: 3rem;
     padding-top: 3rem;
+}
+
+.card {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    @media only screen and (max-width: $EXTRA-SMALL-DEV) {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+.fa,.btn,.form-control, p{
+    font-size: 1.5rem;
 }
