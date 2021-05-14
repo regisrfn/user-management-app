@@ -22,6 +22,11 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    this.authService.loadToken()    
+    if (this.authService.geToken())
+      this.router.navigateByUrl("/");
+    else
+      this.router.navigateByUrl("/login");
   }
 
   public login(user: User) {
