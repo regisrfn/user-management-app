@@ -12,6 +12,7 @@ import { AuthenticationService } from './shared/service/authentication.service';
 import { NotificationService } from './shared/service/notification.service';
 import { UserService } from './shared/service/user.service';
 import { RegisterComponent } from './register/register.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { RegisterComponent } from './register/register.component';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
