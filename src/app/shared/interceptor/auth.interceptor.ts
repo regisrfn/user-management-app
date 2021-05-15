@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AuthenticationService } from '../shared/service/authentication.service';
+import { AuthenticationService } from '../service/authentication.service';
 import { Router } from '@angular/router';
 
 @Injectable()

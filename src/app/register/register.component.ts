@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotificationType } from '../enum/notification-type.enum';
+import { NotificationType } from '../shared/enum/notification-type.enum';
 import { User } from '../shared/model/user.model';
 import { AuthenticationService } from '../shared/service/authentication.service';
 import { NotificationService } from '../shared/service/notification.service';

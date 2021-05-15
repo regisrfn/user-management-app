@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
-import { NotificationType } from 'src/app/enum/notification-type.enum';
+import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 
 @Injectable({
   providedIn: 'root'
