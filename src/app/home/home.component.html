@@ -1,1 +1,82 @@
-<p>home works!</p>
+<div class="container">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex mb-2 nav-container nav-header">
+                    <nav class="d-flex nav-home" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="active breadcrumb-item" aria-current="page">
+                                <a href="/"><i class="fa fa-home"></i></a>
+                            </li>
+                            <li class="active breadcrumb-item" aria-current="page">Users</li>
+                        </ol>
+                    </nav>
+                    <div class="d-flex align-items-center mr-2 search">
+                        <div class="input-group">
+                            <input placeholder="Search for..." type="text" class="form-control">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="toolbar" class="btn-toolbar">
+                        <div role="group" class="btn-group">
+                            <button (click)="refreshUsers(true)" id="tooltipAddNew" class="align-self-center btn btn-success">
+                                <i *ngIf="!refreshing" class="fas fa-sync-alt"></i>
+                                <i *ngIf="refreshing" class="fas fa-sync-alt fa-spin"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="card-actions d-flex">
+                            <h5 class="card-title mb-0">Users</h5>
+                            <div class="dropdown show ms-auto">
+                                <a href="#" data-bs-toggle="dropdown" data-display="static">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of usersList; trackBy:trackByFn">
+                                    <td><img [src]="imageUrl+user.userId" width="32" height="32"
+                                            class="rounded-circle my-n1" alt="Avatar"></td>
+                                    <td>{{user.firstName}} {{user.lastName}}</td>
+                                    <td>{{user.role}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>
+                                        <span *ngIf="user.active" class="badge bg-success">Active</span>
+                                        <span *ngIf="!user.active" class="badge bg-danger">Locked</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
