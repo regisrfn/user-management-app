@@ -13,6 +13,7 @@ import { NotificationService } from './shared/service/notification.service';
 import { UserService } from './shared/service/user.service';
 import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './header/header.component';
+import { UserInfoModalComponent } from './home/user-info-modal/user-info-modal.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { HeaderComponent } from './header/header.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserInfoModalComponent
   ],
   imports: [
     BrowserModule,
