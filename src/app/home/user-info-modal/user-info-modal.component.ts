@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/model/user.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-info-modal',
@@ -10,6 +11,7 @@ export class UserInfoModalComponent implements OnInit {
 
   @Input() idModal: string | undefined
   @Input() user: User | undefined
+  imageUrl = `${environment.API_URL}/image/`
 
   constructor() { }
 

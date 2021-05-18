@@ -7,7 +7,7 @@ export class User {
     info: string | undefined
     lastLoginDate: string | undefined
     lastName: string | undefined
-    locked: string | undefined
+    locked: boolean | undefined
     role: string | undefined
     userId: string | undefined
     userNo: string | undefined
