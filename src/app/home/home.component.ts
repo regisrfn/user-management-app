@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { environment } from 'src/environments/environment';
@@ -16,9 +16,11 @@ import { UserService } from '../shared/service/user.service';
 })
 export class HomeComponent implements OnInit {
 
+  @ViewChild('userInfoBtn') userInfoBtn: ElementRef | undefined;
   usersList: User[] = []
   imageUrl = `${environment.API_URL}/image/`
   refreshing = false
+  selectedUser: User | undefined
 
   constructor(private userService: UserService,
     private notificationService: NotifierService,
@@ -50,6 +52,12 @@ export class HomeComponent implements OnInit {
         this.sendErrorMsg(err.error.message);
         this.handleUnauthorizedRequest(err)
       })
+  }
+
+  public showUserInfo(user: User) {
+    this.selectedUser = user
+    let btn = this.userInfoBtn?.nativeElement as HTMLButtonElement
+    btn?.click()
   }
 
   private sendErrorMsg(message: string) {

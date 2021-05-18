@@ -21,7 +21,8 @@
                     </div>
                     <div role="toolbar" class="btn-toolbar">
                         <div role="group" class="btn-group">
-                            <button (click)="refreshUsers(true)" id="tooltipAddNew" class="align-self-center btn btn-success">
+                            <button (click)="refreshUsers(true)" id="tooltipAddNew"
+                                class="align-self-center btn btn-success">
                                 <i *ngIf="!refreshing" class="fas fa-sync-alt"></i>
                                 <i *ngIf="refreshing" class="fas fa-sync-alt fa-spin"></i>
                             </button>
@@ -63,12 +64,14 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let user of usersList; trackBy:trackByFn">
-                                    <td><img [src]="imageUrl+user.userId" width="40" height="40"
-                                            class="rounded-circle my-n1" alt="Avatar"></td>
-                                    <td>{{user.firstName}} {{user.lastName}}</td>
-                                    <td>{{user.role}}</td>
-                                    <td>{{user.email}}</td>
-                                    <td>
+                                    <td (click)="showUserInfo(user)">
+                                        <img [src]="imageUrl+user.userId" width="40" height="40"
+                                            class="rounded-circle my-n1" alt="Avatar">
+                                    </td>
+                                    <td (click)="showUserInfo(user)">{{user.firstName}} {{user.lastName}}</td>
+                                    <td (click)="showUserInfo(user)">{{user.role}}</td>
+                                    <td (click)="showUserInfo(user)">{{user.email}}</td>
+                                    <td (click)="showUserInfo(user)">
                                         <span *ngIf="user.active" class="badge bg-success">Active</span>
                                         <span *ngIf="!user.active" class="badge bg-danger">Locked</span>
                                     </td>
@@ -80,3 +83,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Button trigger modal -->
+    <button hidden=true #userInfoBtn type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#userInfoModal"></button>
+    <app-user-info-modal [user]="selectedUser" [idModal]="'userInfoModal'"></app-user-info-modal>
+</div>

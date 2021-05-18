@@ -54,10 +54,21 @@ h5 {
 th {
     color: $grey-darken-2;
 }
+td {
+    cursor: pointer;
+}
 
-.nav-header{
+tbody {
+    tr {
+        &:hover {
+            background-color: $grey-lighten-2;
+        }
+    }
+}
+
+.nav-header {
     @media only screen and (max-width: $EXTRA-SMALL-DEV) {
-       flex-direction: column;
+        flex-direction: column;
     }
 }
 
@@ -75,8 +86,8 @@ th {
     margin-right: 0.5rem;
 }
 
-.breadcrumb{
-    li{
+.breadcrumb {
+    li {
         font-size: 1.6rem;
     }
 }
