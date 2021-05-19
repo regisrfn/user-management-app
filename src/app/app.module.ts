@@ -14,6 +14,7 @@ import { UserService } from './shared/service/user.service';
 import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './header/header.component';
 import { UserInfoModalComponent } from './home/user-info-modal/user-info-modal.component';
+import { NewUserModalComponent } from './home/new-user-modal/new-user-modal.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { UserInfoModalComponent } from './home/user-info-modal/user-info-modal.c
     LoginComponent,
     RegisterComponent,
     HeaderComponent,
-    UserInfoModalComponent
+    UserInfoModalComponent,
+    NewUserModalComponent
   ],
   imports: [
     BrowserModule,
