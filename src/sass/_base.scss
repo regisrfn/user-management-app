@@ -32,7 +32,8 @@ body {
 #app {
     // margin-top: 3rem;
     // padding-top: 3rem;
-    background-color: $blue-accent-1;
+    background: $blue-lighten-1;
+    background: linear-gradient(150deg, rgba($blue-lighten-1,1) 0%, rgba($blue-lighten-5,1) 100%); 
 }
 
 .card {
