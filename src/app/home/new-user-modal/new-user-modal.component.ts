@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/shared/model/user.model';
 
 @Component({
   selector: 'app-new-user-modal',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewUserModalComponent implements OnInit {
 
+  newUser = new User
   constructor() { }
 
   ngOnInit(): void {

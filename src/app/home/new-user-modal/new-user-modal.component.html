@@ -30,23 +30,27 @@
                                         </div>
                                         <hr class="border-light m-0">
 
-                                        <div class="card-body">
+                                        <form class="card-body" #saveUserForm="ngForm">
                                             <div class="form-group">
                                                 <label class="form-label">Username</label>
-                                                <input type="text" class="form-control mb-1" value="nmaxwell">
+                                                <input type="text" class="form-control mb-1"
+                                                    [(ngModel)]="newUser.username" required name="username">
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">First name</label>
-                                                <input type="text" class="form-control" value="Nelle Maxwell">
+                                                <input type="text" class="form-control" [(ngModel)]="newUser.firstName"
+                                                    name="firstName" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Last name</label>
-                                                <input type="text" class="form-control" value="Nelle Maxwell">
+                                                <input type="text" class="form-control" [(ngModel)]="newUser.lastName"
+                                                    name="lastName" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">E-mail</label>
-                                                <input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
-                                                <div class="alert alert-warning mt-3">
+                                                <input type="text" class="form-control mb-1" 
+                                                    [(ngModel)]="newUser.email" name="email" #email="ngModel" required>
+                                                <div *ngIf="email.valid" class="alert alert-warning mt-3">
                                                     Password will be send to the email above.
                                                 </div>
                                             </div>
@@ -78,7 +82,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
