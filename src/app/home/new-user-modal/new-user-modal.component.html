@@ -1,10 +1,10 @@
 <!-- Modal -->
-<div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
+<div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="newUserModalLabel">Save</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button (click)="close()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="container light-style flex-grow-1 container-p-y">
@@ -19,9 +19,12 @@
                                             <img [src]="previewImgURL" alt="" class="d-block ui-w-80 mb-1">
                                             <div class="media-body ml-4">
                                                 <label class="btn btn-outline-primary">
-                                                    Upload                                         <input #inputFile type="file" class="account-settings-fileinput" (change)="selectFiles(inputFile)">
+                                                    Upload <input #inputFile type="file"
+                                                        class="account-settings-fileinput"
+                                                        (change)="selectFiles(inputFile)">
                                                 </label> &nbsp;
-                                                <button type="button" class="btn btn-default md-btn-flat" (click)="unselectFiles()">Reset</button>
+                                                <button type="button" class="btn btn-default md-btn-flat"
+                                                    (click)="unselectFiles()">Reset</button>
 
                                                 <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of
                                                     800K</div>
@@ -47,16 +50,17 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">E-mail</label>
-                                                <input type="text" class="form-control mb-1" 
-                                                    [(ngModel)]="newUser.email" name="email" #email="ngModel" required>
+                                                <input type="text" class="form-control mb-1" [(ngModel)]="newUser.email"
+                                                    name="email" #email="ngModel" required>
                                                 <div *ngIf="email.valid" class="alert alert-warning mt-3">
                                                     Password will be send to the email above.
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Role</label>
-                                                <select class="form-select" aria-label="select-role">
-                                                    <option selected value="ROLE_USER">USER</option>
+                                                <select #selectRole (change)="onSelectRole(selectRole)"
+                                                    class="form-select" aria-label="select-role">
+                                                    <option value="ROLE_USER">USER</option>
                                                     <option value="ROLE_HR">HR</option>
                                                     <option value="ROLE_ADMIN">ADMIN</option>
                                                     <option value="ROLE_MANAGER">MANAGER</option>
@@ -67,16 +71,21 @@
                                             <div class="form-group mt-2">
                                                 <label class="form-label">Status</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck1">
-                                                    <label class="form-check-label" for="defaultCheck1">
+                                                    <input class="form-check-input" type="checkbox" id="defaultCheck1"
+                                                        [(ngModel)]="newUser.locked" name="locked">
+                                                    <label class="form-check-label badge" name="locked"
+                                                        for="defaultCheck1"
+                                                        [ngClass]="{'bg-success':!newUser.locked, 'bg-danger':newUser.locked}">
                                                         Locked
+                                                        <i *ngIf="newUser.locked" class="fas fa-lock"></i>
+                                                        <i *ngIf="!newUser.locked" class="fas fa-unlock"></i>
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                        id="defaultCheck2">
-                                                    <label class="form-check-label" for="defaultCheck2">
+                                                    <input class="form-check-input" type="checkbox" id="defaultCheck2"
+                                                        [(ngModel)]="newUser.active" name="active">
+                                                    <label class="form-check-label badge" for="defaultCheck2"
+                                                        [ngClass]="{'bg-success':newUser.active,    'bg-danger':!newUser.active}">
                                                         Active
                                                     </label>
                                                 </div>
@@ -90,8 +99,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()" >Cancel</button>
+                <button type="button" class="btn btn-primary" [disabled]="saveUserForm.invalid">Save</button>
             </div>
         </div>
     </div>

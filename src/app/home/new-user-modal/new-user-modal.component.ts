@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import { User } from 'src/app/shared/model/user.model';
 import { NotificationService } from 'src/app/shared/service/notification.service';
@@ -10,6 +11,7 @@ import { NotificationService } from 'src/app/shared/service/notification.service
 })
 export class NewUserModalComponent implements OnInit {
 
+  @ViewChild("saveUserForm") formUser: NgForm | undefined
   newUser = new User
   formData = new FormData();
   previewImgURL: string | ArrayBuffer | null | undefined
@@ -40,8 +42,23 @@ export class NewUserModalComponent implements OnInit {
     }
   }
 
-  public unselectFiles(){
+  public unselectFiles() {
     this.formData.delete('file')
+    this.previewImgURL = undefined
+  }
+
+  public onSelectRole(selectInput: HTMLSelectElement) {
+    this.newUser.role = selectInput.value
+  }
+
+  public close() {
+    this.reset()
+  }
+
+  private reset() {
+    this.formUser?.reset()
+    this.formData = new FormData()
+    this.newUser = new User
     this.previewImgURL = undefined
   }
 
