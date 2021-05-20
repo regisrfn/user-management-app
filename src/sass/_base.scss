@@ -56,3 +56,9 @@ h2 {
 .fa,.btn,.form-control, p{
     font-size: 1.5rem;
 }
+
+.ng-invalid:not(form) {
+    &.ng-touched{
+        box-shadow: 0 0 5px red; /* red */
+    }
+}
