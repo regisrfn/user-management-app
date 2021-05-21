@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import { User } from 'src/app/shared/model/user.model';
 import { NotificationService } from 'src/app/shared/service/notification.service';
+import { UserService } from 'src/app/shared/service/user.service';
 
 @Component({
   selector: 'app-new-user-modal',
@@ -12,11 +14,13 @@ import { NotificationService } from 'src/app/shared/service/notification.service
 export class NewUserModalComponent implements OnInit {
 
   @ViewChild("saveUserForm") formUser: NgForm | undefined
+  @ViewChild('btnClose') btnClose: ElementRef | undefined;
   newUser = new User
   formData = new FormData();
   previewImgURL: string | ArrayBuffer | null | undefined
 
-  constructor(private notificationService: NotificationService) { }
+  constructor(private notificationService: NotificationService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -55,11 +59,38 @@ export class NewUserModalComponent implements OnInit {
     this.reset()
   }
 
+  public save() {
+    let btn = this.btnClose?.nativeElement as HTMLButtonElement
+    this.formData.append('user', new Blob([JSON.stringify(this.newUser)], { type: "application/json" }))
+
+    this.userService.saveUser(this.formData)
+      .then(res => {
+        this.notificationService.notify(NotificationType.SUCCESS, "New user saved successfully.")
+        btn.click()
+      })
+      .catch((err: HttpErrorResponse) => {
+        this.sendErrorMsg(NotificationType.ERROR, err.error?.message)
+      })
+  }
+
   private reset() {
-    this.formUser?.reset()
-    this.formData = new FormData()
+    this.resetFormValidation()
     this.newUser = new User
+    this.formData = new FormData
     this.previewImgURL = undefined
+  }
+
+  private sendErrorMsg(ERROR: NotificationType, message: string) {
+    if (message)
+      this.notificationService.notify(ERROR, message);
+    else
+      this.notificationService.notify(ERROR, "An error occurred. Please try again.");
+  }
+
+  private resetFormValidation() {
+    this.formUser?.form.markAsPristine();
+    this.formUser?.form.markAsUntouched();
+    this.formUser?.form.updateValueAndValidity();
   }
 
 }

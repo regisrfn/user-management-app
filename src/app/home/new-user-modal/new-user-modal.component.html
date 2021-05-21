@@ -1,10 +1,12 @@
 <!-- Modal -->
-<div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="newUserModalLabel">Save</h5>
-                <button (click)="close()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button #btnClose (click)="close()" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="container light-style flex-grow-1 container-p-y">
@@ -59,7 +61,7 @@
                                             <div class="form-group">
                                                 <label class="form-label">Role</label>
                                                 <select #selectRole (change)="onSelectRole(selectRole)"
-                                                    class="form-select" aria-label="select-role">
+                                                    [value]="newUser.role" class="form-select" aria-label="select-role">
                                                     <option value="ROLE_USER">USER</option>
                                                     <option value="ROLE_HR">HR</option>
                                                     <option value="ROLE_ADMIN">ADMIN</option>
@@ -76,18 +78,15 @@
                                                     <label class="form-check-label badge" name="locked"
                                                         for="defaultCheck1"
                                                         [ngClass]="{'bg-success':!newUser.locked, 'bg-danger':newUser.locked}">
-                                                        Locked
-                                                        <i *ngIf="newUser.locked" class="fas fa-lock"></i>
-                                                        <i *ngIf="!newUser.locked" class="fas fa-unlock"></i>
+                                                        <i *ngIf="newUser.locked" class="fas fa-lock"> Locked</i>
+                                                        <i *ngIf="!newUser.locked" class="fas fa-unlock"> Unlocked</i>
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="defaultCheck2"
                                                         [(ngModel)]="newUser.active" name="active">
-                                                    <label class="form-check-label badge" for="defaultCheck2"
-                                                        [ngClass]="{'bg-success':newUser.active,    'bg-danger':!newUser.active}">
-                                                        Active
-                                                    </label>
+                                                    <label *ngIf="newUser.active" class="form-check-label badge bg-success" for="defaultCheck2">Active</label>
+                                                    <label *ngIf="!newUser.active" class="form-check-label badge bg-danger" for="defaultCheck2">Inactive</label>
                                                 </div>
                                             </div>
                                         </form>
@@ -99,8 +98,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="close()" >Cancel</button>
-                <button type="button" class="btn btn-primary" [disabled]="saveUserForm.invalid">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="close()">Cancel</button>
+                <button type="button" class="btn btn-primary" [disabled]="saveUserForm.invalid" (click)="save()">Save</button>
             </div>
         </div>
     </div>
