@@ -33,7 +33,7 @@ body {
     // margin-top: 3rem;
     // padding-top: 3rem;
     background: $blue-lighten-1;
-    background: linear-gradient(150deg, rgba($blue-lighten-1,1) 0%, rgba($blue-lighten-5,1) 100%); 
+    background: linear-gradient(150deg, rgba($blue-lighten-1, 1) 0%, rgba($blue-lighten-5, 1) 100%);
 }
 
 .card {
@@ -53,12 +53,27 @@ h2 {
     font-size: 2rem;
 }
 
-.fa,.btn,.form-control, p{
+.fa,
+.btn,
+.form-control,
+p {
     font-size: 1.5rem;
 }
 
 .ng-invalid:not(form) {
-    &.ng-touched{
+    &.ng-touched {
         box-shadow: 0 0 5px red; /* red */
     }
+}
+
+.modal {
+    z-index: 9;
+}
+
+.modal-backdrop {
+    z-index: 8;
+}
+
+.navbar {
+    z-index: 7;
 }
