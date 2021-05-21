@@ -1,7 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse} from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
+import { HttpResponse } from 'src/app/shared/model/http-response.model';
 import { User } from 'src/app/shared/model/user.model';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 import { UserService } from 'src/app/shared/service/user.service';
@@ -18,6 +19,8 @@ export class NewUserModalComponent implements OnInit {
   newUser = new User
   formData = new FormData();
   previewImgURL: string | ArrayBuffer | null | undefined
+  loading = false;
+  httpResponse: HttpResponse | undefined
 
   constructor(private notificationService: NotificationService,
     private userService: UserService) { }
@@ -36,7 +39,7 @@ export class NewUserModalComponent implements OnInit {
         return;
       }
 
-      this.formData.append('file', files[0], files[0].name);
+      this.formData.set('file', files[0], files[0].name);
 
       var reader = new FileReader();
       reader.readAsDataURL(files[0]);
@@ -60,15 +63,19 @@ export class NewUserModalComponent implements OnInit {
   }
 
   public save() {
+    this.httpResponse = undefined
     let btn = this.btnClose?.nativeElement as HTMLButtonElement
-    this.formData.append('user', new Blob([JSON.stringify(this.newUser)], { type: "application/json" }))
-
+    this.formData.set('user', new Blob([JSON.stringify(this.newUser)], { type: "application/json" }))
+    this.loading = true
     this.userService.saveUser(this.formData)
       .then(res => {
+        this.loading = false
         this.notificationService.notify(NotificationType.SUCCESS, "New user saved successfully.")
         btn.click()
       })
       .catch((err: HttpErrorResponse) => {
+        this.httpResponse = err.error
+        this.loading = false    
         this.sendErrorMsg(NotificationType.ERROR, err.error?.message)
       })
   }
