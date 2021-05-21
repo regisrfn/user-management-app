@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './header/header.component';
 import { UserInfoModalComponent } from './home/user-info-modal/user-info-modal.component';
 import { NewUserModalComponent } from './home/new-user-modal/new-user-modal.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { NewUserModalComponent } from './home/new-user-modal/new-user-modal.comp
     RegisterComponent,
     HeaderComponent,
     UserInfoModalComponent,
-    NewUserModalComponent
+    NewUserModalComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

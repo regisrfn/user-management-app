@@ -1,0 +1,49 @@
+.content {
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($black, 0.5);
+
+    @media only screen and (max-width: $SMALL-DEV) {
+        padding-top: 40%;
+        justify-content: flex-start;
+    }
+
+    .loader {
+        display: flex;
+        border: 0.75rem solid #f3f3f3; /* Light grey */
+        border-top: 0.75rem solid $green-accent-4; /* Blue */
+        border-radius: 100%;
+        width: 10rem;
+        height: 10rem;
+        animation: spin 1.6s linear infinite;
+    }
+
+    .text {
+        font-size: 3rem;
+        color: $green-darken-2;
+        font-weight: bolder;
+    }
+
+    h1 {
+        color: white;
+        font-size: 2.2rem;
+        font-weight: bold;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
