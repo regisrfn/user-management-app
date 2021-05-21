@@ -1,4 +1,4 @@
-import { HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
@@ -21,6 +21,7 @@ export class NewUserModalComponent implements OnInit {
   previewImgURL: string | ArrayBuffer | null | undefined
   loading = false;
   httpResponse: HttpResponse | undefined
+  file: File | undefined
 
   constructor(private notificationService: NotificationService,
     private userService: UserService) { }
@@ -39,10 +40,11 @@ export class NewUserModalComponent implements OnInit {
         return;
       }
 
-      this.formData.set('file', files[0], files[0].name);
+      this.file = files[0]
+      this.formData.set('file', this.file, this.file.name);
 
       var reader = new FileReader();
-      reader.readAsDataURL(files[0]);
+      reader.readAsDataURL(this.file);
       reader.onload = (_event) => {
         this.previewImgURL = reader.result;
       }
@@ -51,6 +53,7 @@ export class NewUserModalComponent implements OnInit {
 
   public unselectFiles() {
     this.formData.delete('file')
+    this.file= undefined
     this.previewImgURL = undefined
   }
 
@@ -75,7 +78,7 @@ export class NewUserModalComponent implements OnInit {
       })
       .catch((err: HttpErrorResponse) => {
         this.httpResponse = err.error
-        this.loading = false    
+        this.loading = false
         this.sendErrorMsg(NotificationType.ERROR, err.error?.message)
       })
   }
@@ -85,6 +88,7 @@ export class NewUserModalComponent implements OnInit {
     this.newUser = new User
     this.formData = new FormData
     this.previewImgURL = undefined
+    this.file= undefined
   }
 
   private sendErrorMsg(ERROR: NotificationType, message: string) {
