@@ -78,7 +78,7 @@
                                     <td (click)="showUserInfo(user)">{{user.email}}</td>
                                     <td (click)="showUserInfo(user)">
                                         <span *ngIf="user.active" class="badge bg-success">Active</span>
-                                        <span *ngIf="!user.active" class="badge bg-danger">Locked</span>
+                                        <span *ngIf="!user.active" class="badge bg-danger">Inactive</span>
                                     </td>
                                 </tr>
                             </tbody>
