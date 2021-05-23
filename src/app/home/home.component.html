@@ -26,8 +26,7 @@
                                 data-bs-target="#newUserModal">
                                 <i class="fas fa-plus"></i> User
                             </button>
-                            <button (click)="refreshUsers(true)" id="tooltipAddNew"
-                                class="btn btn-success">
+                            <button (click)="refreshUsers(true)" id="tooltipAddNew" class="btn btn-success">
                                 <i *ngIf="!refreshing" class="fas fa-sync-alt"></i>
                                 <i *ngIf="refreshing" class="fas fa-sync-alt fa-spin"></i>
                             </button>
@@ -49,9 +48,7 @@
                                     </svg>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item" (click)="editMode=!editMode">Edit mode</a>
                                 </div>
                             </div>
                         </div>
@@ -65,6 +62,7 @@
                                     <th>Role</th>
                                     <th>Email</th>
                                     <th>Status</th>
+                                    <th *ngIf="editMode">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,6 +77,10 @@
                                     <td (click)="showUserInfo(user)">
                                         <span *ngIf="user.active" class="badge bg-success">Active</span>
                                         <span *ngIf="!user.active" class="badge bg-danger">Inactive</span>
+                                    </td>
+                                    <td *ngIf="editMode">
+                                        <span class="fas fa-trash text-danger"></span>
+                                        <span class="fas fa-edit text-dark ms-3"></span>
                                     </td>
                                 </tr>
                             </tbody>

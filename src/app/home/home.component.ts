@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   imageUrl = `${environment.API_URL}/image/`
   refreshing = false
   selectedUser: User | undefined
+  editMode = false
 
   constructor(private userService: UserService,
     private notificationService: NotifierService,
