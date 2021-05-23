@@ -1,5 +1,5 @@
 export class User {
-    active = false
+    active = true
     authorities: string[] | undefined
     createdAt: string | undefined
     email: string | undefined
