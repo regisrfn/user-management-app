@@ -97,3 +97,16 @@ tbody {
 .dropdown-menu {
     font-size: 1.2rem;
 }
+
+.fa-trash{   
+    &:hover{
+        transform: scale(1.1);
+    }
+}
+
+.fa-edit{
+    color: $grey-darken-2;
+    &:hover{
+        transform: scale(1.1);
+    }
+}
