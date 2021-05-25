@@ -1,0 +1,127 @@
+<!-- Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel"
+    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div *ngIf="editUser" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container light-style flex-grow-1 container-p-y">
+                    <div class="card overflow-hidden">
+                        <div class="row no-gutters row-bordered row-border-light">
+                            <div class="col">
+                                <div class="tab-content">
+                                    <form #editUserForm="ngForm" class="tab-pane fade active show" id="account-general">
+
+                                        <div class="card-body media align-items-center">
+                                            <label class="form-label">Profile image</label>
+                                            <img [src]="previewImgURL" alt="" class="d-block ui-w-80 mb-1">
+                                            <div class="media-body ml-4">
+                                                <label class="btn btn-outline-primary">
+                                                    Upload
+                                                    <input #inputFile name="file" ngModel type="file"
+                                                        class="account-settings-fileinput"
+                                                        (change)="selectFiles(inputFile)" required>
+                                                </label> &nbsp;
+                                                <button type="button" class="btn btn-default md-btn-flat"
+                                                    (click)="unselectFiles()">Reset</button>
+
+                                                <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of
+                                                    800K</div>
+                                            </div>
+                                        </div>
+                                        <hr class="border-light m-0">
+
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label class="form-label">Username</label>
+                                                <input type="text" class="form-control mb-1"
+                                                    [(ngModel)]="editUser!.username" required name="username">
+                                                <div *ngIf="httpResponse?.errors?.username"
+                                                    class="alert alert-danger mt-1">
+                                                    {{httpResponse?.errors?.username}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">First name</label>
+                                                <input type="text" class="form-control"
+                                                    [(ngModel)]="editUser.firstName" name="firstName" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Last name</label>
+                                                <input type="text" class="form-control"
+                                                    [(ngModel)]="editUser.lastName" name="lastName" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">E-mail</label>
+                                                <input type="text" class="form-control mb-1"
+                                                    [(ngModel)]="editUser.email" name="email" #email="ngModel"
+                                                    required>
+                                                <div *ngIf="httpResponse?.errors?.email"
+                                                    class="alert alert-danger mt-1">
+                                                    {{httpResponse?.errors?.email}}
+                                                </div>
+                                                <div *ngIf="email.valid" class="alert alert-warning mt-3">
+                                                    Password will be send to the email above.
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Role</label>
+                                                <select #selectRole (change)="onSelectRole(selectRole)"
+                                                    [value]="editUser.role" class="form-select"
+                                                    aria-label="select-role">
+                                                    <option value="ROLE_USER">USER</option>
+                                                    <option value="ROLE_HR">HR</option>
+                                                    <option value="ROLE_ADMIN">ADMIN</option>
+                                                    <option value="ROLE_MANAGER">MANAGER</option>
+                                                    <option value="ROLE_SUPER_ADMIN">SUPER ADMIN</option>
+                                                </select>
+                                            </div>
+                                            <hr>
+                                            <div class="form-group mt-2">
+                                                <label class="form-label">Status</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="editUserCheck1"
+                                                        [(ngModel)]="editUser.locked" name="locked">
+                                                    <label class="form-check-label badge" name="locked"
+                                                        for="editUserCheck1"
+                                                        [ngClass]="{'bg-success':!editUser.locked, 'bg-danger':editUser.locked}">
+                                                        <i *ngIf="editUser.locked" class="fas fa-lock"> Locked</i>
+                                                        <i *ngIf="!editUser.locked" class="fas fa-unlock">
+                                                            Unlocked</i>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="editUserCheck2"
+                                                        [(ngModel)]="editUser.active" name="active">
+                                                    <label *ngIf="editUser.active"
+                                                        class="form-check-label badge bg-success"
+                                                        for="editUserCheck2">Active</label>
+                                                    <label *ngIf="!editUser.active"
+                                                        class="form-check-label badge bg-danger"
+                                                        for="editUserCheck2">Inactive</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div *ngIf="!file" class="alert alert-danger">
+                    Profile image is required.
+                </div>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="close()">Cancel</button>
+                <button type="button" class="btn btn-primary" [disabled]="editUserForm.invalid || !file"
+                    (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -61,6 +61,10 @@ export class HomeComponent implements OnInit {
     btn?.click()
   }
 
+  public onUpdateUser(user: User) {
+    this.selectedUser = Object.assign({}, user)
+  }
+
   private sendErrorMsg(message: string) {
     if (message)
       this.notificationService.notify(NotificationType.ERROR, message);
