@@ -1,11 +1,11 @@
 <!-- Modal -->
-<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel"
-    aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
 
     <div class="modal-dialog modal-dialog-scrollable">
         <div *ngIf="editUser" class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editUserModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="editUserModalLabel">Update user</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -21,16 +21,22 @@
                                             <img [src]="previewImgURL" alt="" class="d-block ui-w-80 mb-1">
                                             <div class="media-body ml-4">
                                                 <label class="btn btn-outline-primary">
-                                                    Upload
-                                                    <input #inputFile name="file" ngModel type="file"
+                                                    Upload image
+                                                    <input #inputFile type="file"
                                                         class="account-settings-fileinput"
                                                         (change)="selectFiles(inputFile)" required>
                                                 </label> &nbsp;
                                                 <button type="button" class="btn btn-default md-btn-flat"
-                                                    (click)="unselectFiles()">Reset</button>
-
-                                                <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of
-                                                    800K</div>
+                                                    (click)="unselectFiles()" [disabled]="!file">Reset
+                                                </button>
+                                                <button type="button" class="btn btn-primary"
+                                                    [disabled]="!file"
+                                                    (click)="updateProfileImg()">Save
+                                                </button>
+                                                <div class="text-light small mt-1">
+                                                    Allowed JPG, GIF or PNG. Max size of
+                                                    800K
+                                                </div>
                                             </div>
                                         </div>
                                         <hr class="border-light m-0">
@@ -47,19 +53,18 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">First name</label>
-                                                <input type="text" class="form-control"
-                                                    [(ngModel)]="editUser.firstName" name="firstName" required>
+                                                <input type="text" class="form-control" [(ngModel)]="editUser.firstName"
+                                                    name="firstName" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Last name</label>
-                                                <input type="text" class="form-control"
-                                                    [(ngModel)]="editUser.lastName" name="lastName" required>
+                                                <input type="text" class="form-control" [(ngModel)]="editUser.lastName"
+                                                    name="lastName" required>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">E-mail</label>
                                                 <input type="text" class="form-control mb-1"
-                                                    [(ngModel)]="editUser.email" name="email" #email="ngModel"
-                                                    required>
+                                                    [(ngModel)]="editUser.email" name="email" #email="ngModel" required>
                                                 <div *ngIf="httpResponse?.errors?.email"
                                                     class="alert alert-danger mt-1">
                                                     {{httpResponse?.errors?.email}}
@@ -70,7 +75,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-label">Role</label>
-                                                <select #selectRole (change)="onSelectRole(selectRole)"
+                                                <select #selectRole name="role" (change)="onSelectRole(selectRole)"
                                                     [value]="editUser.role" class="form-select"
                                                     aria-label="select-role">
                                                     <option value="ROLE_USER">USER</option>
@@ -119,9 +124,12 @@
                 </div>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     (click)="close()">Cancel</button>
-                <button type="button" class="btn btn-primary" [disabled]="editUserForm.invalid || !file"
+                <button type="button" class="btn btn-primary" [disabled]="editUserForm.invalid || (editUserForm.untouched && !editUserForm.dirty)"
                     (click)="save()">Save</button>
             </div>
         </div>
     </div>
+    <app-loader *ngIf="loading">
+        <h1>Saving ...</h1>
+    </app-loader>
 </div>

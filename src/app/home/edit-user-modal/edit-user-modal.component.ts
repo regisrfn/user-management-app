@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { NotificationType } from 'src/app/shared/enum/notification-type.enum';
 import { HttpResponse } from 'src/app/shared/model/http-response.model';
 import { User } from 'src/app/shared/model/user.model';
@@ -15,7 +16,7 @@ import { environment } from 'src/environments/environment';
 })
 export class EditUserModalComponent implements OnInit, OnChanges {
 
-  @ViewChild("saveUserForm") formUser: NgForm | undefined
+  @ViewChild("editUserForm") formUser: NgForm | undefined
   @ViewChild('btnClose') btnClose: ElementRef | undefined;
   @Output() closed: EventEmitter<{ isClosed: boolean }> = new EventEmitter();
   @Input() editUser: User | undefined
@@ -25,6 +26,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
   loading = false;
   httpResponse: HttpResponse | undefined
   file: File | undefined
+  subscriptions: Subscription[] = []
 
   constructor(private notificationService: NotificationService,
     private userService: UserService) { }
@@ -68,6 +70,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
   public onSelectRole(selectInput: HTMLSelectElement) {
     if (this.editUser)
       this.editUser.role = selectInput.value
+    this.formUser?.form.markAsDirty()
   }
 
   public close() {
@@ -79,13 +82,12 @@ export class EditUserModalComponent implements OnInit, OnChanges {
     if (!this.editUser)
       return
     this.httpResponse = undefined
-    let btn = this.btnClose?.nativeElement as HTMLButtonElement
     this.loading = true
     this.userService.updateUser(this.editUser)
       .then(res => {
         this.loading = false
         this.notificationService.notify(NotificationType.SUCCESS, "User updated successfully.")
-        btn.click()
+        this.resetFormValidation()
       })
       .catch((err: HttpErrorResponse) => {
         this.httpResponse = err.error
@@ -100,6 +102,10 @@ export class EditUserModalComponent implements OnInit, OnChanges {
     this.formData = new FormData
     this.previewImgURL = undefined
     this.file = undefined
+  }
+
+  public updateProfileImg() {
+
   }
 
   private sendErrorMsg(ERROR: NotificationType, message: string) {

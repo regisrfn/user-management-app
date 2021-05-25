@@ -1,3 +1,5 @@
+@import "../../../sass/variables";
+
 body {
     background: #f5f5f5;
     margin-top: 20px;
@@ -111,5 +113,11 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     }
     input {
         display: none;
+    }
+}
+
+.md-btn-flat{
+    &:hover{
+        background-color: $grey-lighten-2;
     }
 }
