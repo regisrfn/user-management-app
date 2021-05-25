@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  trackByFn(index: any, item: User) {
+  public trackByFn(index: any, item: User) {
     return item.userId;
   }
 
