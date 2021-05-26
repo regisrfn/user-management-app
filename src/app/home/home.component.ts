@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
   refreshing = false
   selectedUser: User | undefined
   editMode = false
+  showDeleteModel = false
+  isDeleting = false
 
   constructor(private userService: UserService,
     private notificationService: NotifierService,
@@ -65,11 +67,43 @@ export class HomeComponent implements OnInit {
     this.selectedUser = Object.assign({}, user)
   }
 
+  public deleteUser(event: { isConfirmed: boolean }) {
+    if (event.isConfirmed && this.selectedUser?.userId) {
+      this.userService.deleteUser(this.selectedUser.userId)
+        .then(res => {
+          this.sendSuccessfullyMsg(res.message)
+          this.showDeleteModel = false
+          this.refreshUsers(true)
+        })
+        .catch((err: HttpErrorResponse) => {
+          let error = err.error as HttpResponse
+          this.sendErrorMsg(error.message)
+        });
+    }else {
+      this.showDeleteModel = false
+      this.selectedUser = undefined
+    }
+  }
+
+  public confirmDelete(user:User){
+    this.selectedUser = user
+    this.showDeleteModel = true
+    console.log(user);
+    
+  }
+
   private sendErrorMsg(message: string) {
     if (message)
       this.notificationService.notify(NotificationType.ERROR, message);
     else
       this.notificationService.notify(NotificationType.ERROR, "An error occurred. Please try again.");
+  }
+
+  private sendSuccessfullyMsg(message: string) {
+    if (message)
+      this.notificationService.notify(NotificationType.SUCCESS, message);
+    else
+      this.notificationService.notify(NotificationType.SUCCESS, "Successfully operation.");
   }
 
   private handleUnauthorizedRequest(err: HttpErrorResponse): void {

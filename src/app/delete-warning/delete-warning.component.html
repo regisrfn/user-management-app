@@ -1,0 +1,17 @@
+<div id="id01" class="modal-delete" [ngClass]="{hideDeleteBox:isClosed}">
+    <span (click)="closeBtn()" class="close" title="Close Modal">×</span>
+    <form class="modal-content">
+        <div class="container">
+
+            <h1>
+                <ng-content></ng-content>
+            </h1>
+            <span>Deseja continuar?</span>
+
+            <div class="clearfix">
+                <button type="button" (click)="cancelBtn()" class="cancelbtn">Cancelar</button>
+                <button type="button" (click)="deleteBtn()" class="deletebtn">Remover</button>
+            </div>
+        </div>
+    </form>
+</div>

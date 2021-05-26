@@ -79,7 +79,9 @@
                                         <span *ngIf="!user.active" class="badge bg-danger">Inactive</span>
                                     </td>
                                     <td *ngIf="editMode">
-                                        <span class="fas fa-trash text-danger"></span>
+                                        <span class="fas fa-trash text-danger"
+                                            (click)="confirmDelete(user)">
+                                        </span>
                                         <span class="fas fa-edit ms-3" data-bs-toggle="modal"
                                             data-bs-target="#editUserModal" (click)="onUpdateUser(user)">
                                         </span>
@@ -97,6 +99,13 @@
     <button hidden=true #userInfoBtn type="button" class="btn btn-primary" data-bs-toggle="modal"
         data-bs-target="#userInfoModal"></button>
     <app-user-info-modal [user]="selectedUser" [idModal]="'userInfoModal'"></app-user-info-modal>
+
     <app-new-user-modal></app-new-user-modal>
+
     <app-edit-user-modal [editUser]="selectedUser" (closed)="selectedUser=undefined"></app-edit-user-modal>
+
+    <app-delete-warning (confirm)="deleteUser($event)" [isClosed]="!showDeleteModel">
+        Delete: {{selectedUser?.firstName}} {{selectedUser?.lastName}} <br>
+        Nº: {{selectedUser?.userNo}}
+    </app-delete-warning>
 </div>

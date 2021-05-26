@@ -17,6 +17,7 @@ import { UserInfoModalComponent } from './home/user-info-modal/user-info-modal.c
 import { NewUserModalComponent } from './home/new-user-modal/new-user-modal.component';
 import { LoaderComponent } from './loader/loader.component';
 import { EditUserModalComponent } from './home/edit-user-modal/edit-user-modal.component';
+import { DeleteWarningComponent } from './delete-warning/delete-warning.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { EditUserModalComponent } from './home/edit-user-modal/edit-user-modal.c
     UserInfoModalComponent,
     NewUserModalComponent,
     LoaderComponent,
-    EditUserModalComponent
+    EditUserModalComponent,
+    DeleteWarningComponent
   ],
   imports: [
     BrowserModule,
