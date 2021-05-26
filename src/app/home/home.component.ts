@@ -87,9 +87,7 @@ export class HomeComponent implements OnInit {
 
   public confirmDelete(user:User){
     this.selectedUser = user
-    this.showDeleteModel = true
-    console.log(user);
-    
+    this.showDeleteModel = true    
   }
 
   private sendErrorMsg(message: string) {
