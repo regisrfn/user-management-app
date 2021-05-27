@@ -1,29 +1,41 @@
-<header class="header-area overlay">
-	<nav id="header" class="navbar navbar-expand-md navbar-dark">
-		<div class="container">
-			<a href="#" class="navbar-brand">Portal</a>
+<nav id="header" class="navbar navbar-expand-sm navbar-dark" [ngClass]="{'change-background':changeNavbarColor}">
+	<div class="container-fluid">
+		<a class="navbar-brand" routerLink="/">Portal</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+			(click)="clickedBtnMenu()">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<form class="d-flex ms-auto">
+				<button class="btn btn-outline-success" type="submit">About us</button>
+			</form>
+			<ul class="navbar-nav mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Services</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fas fa-user-circle" ></i>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
+						<li *ngIf="!currentUser">
+							<a class="dropdown-item" routerLink="/login">Log in</a>
+						</li>
+						<li *ngIf="!currentUser"><a class="dropdown-item" routerLink="/register">Sign up</a>
+						</li>
+						<li *ngIf="currentUser" (click)="logOut()"><a class="dropdown-item">Logout</a></li>
+					</ul>
+				</li>
+			</ul>
 
-			<button id="collapse-btn" type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse"
-				data-bs-target="#main-nav">
-				<span class="menu-icon-bar"></span>
-				<span class="menu-icon-bar"></span>
-				<span class="menu-icon-bar"></span>
-			</button>
-
-			<div id="main-nav" class="collapse navbar-collapse">
-				<ul class="navbar-nav ml-auto">
-					<li><a href="#" class="nav-item nav-link active">Home</a></li>
-					<li class="dropdown"  (mouseover)="showMenu=true" (mouseout)="showMenu=false">
-						<a href="#" class="nav-item nav-link" data-toggle="dropdown">Services</a>
-						<div class="dropdown-menu" [ngClass]="{show:showMenu}">
-							<a href="#" class="dropdown-item">Dropdown Item 1</a>
-							<a href="#" class="dropdown-item">Dropdown Item 2</a>
-							<a href="#" class="dropdown-item">Dropdown Item 3</a>
-						</div>
-					</li>
-					<li><a class="nav-item nav-link" [routerLink]="'/login'">Log In</a></li>
-				</ul>
-			</div>
 		</div>
-	</nav>
-</header>
+	</div>
+</nav>
