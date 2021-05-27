@@ -1,5 +1,5 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Storage } from '../const/storage';
 import { User } from '../model/user.model';
@@ -10,13 +10,13 @@ import { User } from '../model/user.model';
 export class AuthenticationService {
 
   private token: string | undefined;
-  private loggedInUsername: string | undefined;
+  @Output() loginEvent: EventEmitter<{ isLogged: boolean }> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
   public login(user: User): Promise<HttpResponse<User>> {
     return this.http.post<User>(`${environment.API_URL}/login`, user, {
-      observe:'response'
+      observe: 'response'
     })
       .toPromise();
   }
@@ -27,10 +27,10 @@ export class AuthenticationService {
 
   public logOut(): void {
     this.token = undefined;
-    this.loggedInUsername = undefined;
     localStorage.removeItem(Storage.USER);
     localStorage.removeItem(Storage.TOKEN);
     localStorage.removeItem(Storage.USERS);
+    this.loginEvent.emit({ isLogged: false })
   }
 
   public storageToken(token: string): void {

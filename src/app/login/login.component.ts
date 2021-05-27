@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.authService.loadToken()    
+    this.authService.loadToken()
     if (this.authService.geToken())
       this.router.navigateByUrl("/");
     else
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
           this.authService.storageToken(token);
           this.authService.storageUser(res.body);
           this.authService.loadToken();
+          this.authService.loginEvent.emit({ isLogged: true })
           this.router.navigate(['/']);
         }
         this.loading = false;
