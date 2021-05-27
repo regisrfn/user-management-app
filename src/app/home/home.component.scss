@@ -11,7 +11,7 @@ h5 {
 }
 
 .container {
-    padding-top: 8rem;
+    padding-top: 10rem;
     font-size: 1.3rem;
     min-height: 100vh;
 }
@@ -87,6 +87,7 @@ tbody {
 }
 
 .breadcrumb {
+    margin: 0;
     li {
         font-size: 1.6rem;
         font-weight: 700;
