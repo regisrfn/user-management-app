@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -26,6 +26,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
   loading = false;
   httpResponse: HttpResponse | undefined
   file: File | undefined
+  fileStatus = { percentage: 0, status: "progress" }
   subscriptions: Subscription[] = []
 
   constructor(private notificationService: NotificationService,
@@ -92,7 +93,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
       .catch((err: HttpErrorResponse) => {
         this.httpResponse = err.error
         this.loading = false
-        this.sendErrorMsg(NotificationType.ERROR, err.error?.message)
+        this.sendErrorMsg(err.error?.message)
       })
   }
 
@@ -105,20 +106,60 @@ export class EditUserModalComponent implements OnInit, OnChanges {
   }
 
   public updateProfileImg() {
+    if (!this.editUser?.userId)
+      return
 
+    this.subscriptions.push(
+      this.userService.updateProfileImage(this.formData, this.editUser.userId).subscribe(
+        (event: HttpEvent<any>) => {
+          this.handleUploadProgress(event)
+          console.log(event);          
+        },
+        (err: HttpErrorResponse) => {
+          let error = err.error as HttpResponse
+          this.sendErrorMsg(error.message)
+        }
+      )
+    )
   }
 
-  private sendErrorMsg(ERROR: NotificationType, message: string) {
+  private sendErrorMsg(message: string) {
     if (message)
-      this.notificationService.notify(ERROR, message);
+      this.notificationService.notify(NotificationType.ERROR, message);
     else
-      this.notificationService.notify(ERROR, "An error occurred. Please try again.");
+      this.notificationService.notify(NotificationType.ERROR, "An error occurred. Please try again.");
   }
 
   private resetFormValidation() {
     this.formUser?.form.markAsPristine();
     this.formUser?.form.markAsUntouched();
     this.formUser?.form.updateValueAndValidity();
+  }
+
+  private handleUploadProgress(event: HttpEvent<any>) {
+    switch (event.type) {
+      case HttpEventType.UploadProgress:
+        if (event.total) {
+          this.fileStatus.percentage = Math.round(100 * event.loaded / event.total)
+          this.fileStatus.status = "progress"
+        }
+        break;
+
+      case HttpEventType.Response:
+        if (event.status === 200) {
+          this.fileStatus.status = "uploaded"
+          this.sendSuccessfullyUpdatedMsg()
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  private sendSuccessfullyUpdatedMsg() {
+    this.notificationService.notify(NotificationType.SUCCESS, "Profile image was saved.");
+
   }
 
 
