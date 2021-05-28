@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   editMode = false
   showDeleteModel = false
   isDeleting = false
+  time = new Date().getTime()
 
   constructor(private userService: UserService,
     private notificationService: NotifierService,
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
   }
 
   refreshUsers(showMsg = false) {
+    this.time = new Date().getTime()
     this.refreshing = true
     this.userService.getUsers()
       .then(res => {
@@ -79,15 +81,20 @@ export class HomeComponent implements OnInit {
           let error = err.error as HttpResponse
           this.sendErrorMsg(error.message)
         });
-    }else {
+    } else {
       this.showDeleteModel = false
       this.selectedUser = undefined
     }
   }
 
-  public confirmDelete(user:User){
+  public confirmDelete(user: User) {
     this.selectedUser = user
-    this.showDeleteModel = true    
+    this.showDeleteModel = true
+  }
+
+  public getUserImgUrl = (user: User): string => {
+    let url = this.imageUrl + user.userId + '?time=' + this.time
+    return url
   }
 
   private sendErrorMsg(message: string) {

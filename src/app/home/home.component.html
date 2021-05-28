@@ -6,7 +6,7 @@
                     <nav class="d-flex nav-home align-items-center" aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="active breadcrumb-item" aria-current="page">
-                                <a routerLink="/" ><i class="fa fa-home"></i></a>
+                                <a routerLink="/"><i class="fa fa-home"></i></a>
                             </li>
                             <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
                             <li class="active breadcrumb-item" aria-current="page">management</li>
@@ -69,8 +69,8 @@
                             <tbody>
                                 <tr *ngFor="let user of usersList; trackBy:trackByFn">
                                     <td (click)="showUserInfo(user)">
-                                        <img [src]="imageUrl+user.userId" width="40" height="40"
-                                            class="rounded-circle my-n1" alt="Avatar">
+                                        <img [src]="getUserImgUrl(user)" width="40"
+                                            height="40" class="rounded-circle my-n1" alt="Avatar">
                                     </td>
                                     <td (click)="showUserInfo(user)">{{user.firstName}} {{user.lastName}}</td>
                                     <td (click)="showUserInfo(user)">{{user.role}}</td>
@@ -80,8 +80,7 @@
                                         <span *ngIf="!user.active" class="badge bg-danger">Inactive</span>
                                     </td>
                                     <td *ngIf="editMode">
-                                        <span class="fas fa-trash text-danger"
-                                            (click)="confirmDelete(user)">
+                                        <span class="fas fa-trash text-danger" (click)="confirmDelete(user)">
                                         </span>
                                         <span class="fas fa-edit ms-3" data-bs-toggle="modal"
                                             data-bs-target="#editUserModal" (click)="onUpdateUser(user)">
