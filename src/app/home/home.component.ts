@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
   }
 
   public showUserInfo(user: User) {
-    this.selectedUser = user
+    this.selectedUser = Object.assign({image:this.getUserImgUrl(user)}, user)
     let btn = this.userInfoBtn?.nativeElement as HTMLButtonElement
     btn?.click()
   }
