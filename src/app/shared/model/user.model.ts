@@ -13,4 +13,5 @@ export class User {
     userNo: string | undefined
     username: string | undefined
     password:string | undefined
+    image: string | undefined
 }
