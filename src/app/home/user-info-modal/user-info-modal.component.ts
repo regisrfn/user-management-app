@@ -11,11 +11,12 @@ export class UserInfoModalComponent implements OnInit {
 
   @Input() idModal: string | undefined
   @Input() user: User | undefined
-  imageUrl = `${environment.API_URL}/image/`
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit(): void {
+    
   }
 
 }
