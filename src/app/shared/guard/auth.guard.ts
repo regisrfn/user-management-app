@@ -9,9 +9,9 @@ import { AuthenticationService } from '../service/authentication.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthenticationService, 
-              private router: Router,
-              private notificationService:NotifierService) { }
+  constructor(private authService: AuthenticationService,
+    private router: Router,
+    private notificationService: NotifierService) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -20,11 +20,12 @@ export class AuthGuard implements CanActivate {
   }
 
   private hasToken(): boolean {
-    if (this.authService.geToken() !== undefined)
+    this.authService.loadToken()
+    if (this.authService.geToken())
       return true;
 
     this.router.navigate(["/login"])
-    this.notificationService.notify(NotificationType.ERROR, "Needed to log in to access this resource.")
+    this.notificationService.notify(NotificationType.ERROR, "Needed log in to access this resource.")
     return false;
   }
 
