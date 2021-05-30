@@ -7,7 +7,6 @@ import { HttpResponse } from 'src/app/shared/model/http-response.model';
 import { User } from 'src/app/shared/model/user.model';
 import { NotificationService } from 'src/app/shared/service/notification.service';
 import { UserService } from 'src/app/shared/service/user.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -34,7 +33,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.editUser.currentValue)
-      this.previewImgURL = `${environment.API_URL}/image/` + this.editUser?.userId
+      this.previewImgURL = this.editUser?.image
   }
 
   ngOnInit(): void {
@@ -65,7 +64,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
   public unselectFiles() {
     this.formData.delete('file')
     this.file = undefined
-    this.previewImgURL = `${environment.API_URL}/image/` + this.editUser?.userId
+    this.previewImgURL = this.editUser?.image
   }
 
   public onSelectRole(selectInput: HTMLSelectElement) {
@@ -113,11 +112,12 @@ export class EditUserModalComponent implements OnInit, OnChanges {
       this.userService.updateProfileImage(this.formData, this.editUser.userId).subscribe(
         (event: HttpEvent<any>) => {
           this.handleUploadProgress(event)
-          console.log(event);          
+          console.log(event);
         },
         (err: HttpErrorResponse) => {
           let error = err.error as HttpResponse
           this.sendErrorMsg(error.message)
+          this.unselectFiles()
         }
       )
     )
@@ -148,6 +148,8 @@ export class EditUserModalComponent implements OnInit, OnChanges {
       case HttpEventType.Response:
         if (event.status === 200) {
           this.fileStatus.status = "uploaded"
+          this.unselectFiles()
+          this.previewImgURL = this.editUser?.image + '?time=' + new Date().getTime()
           this.sendSuccessfullyUpdatedMsg()
         }
         break;
@@ -161,7 +163,4 @@ export class EditUserModalComponent implements OnInit, OnChanges {
     this.notificationService.notify(NotificationType.SUCCESS, "Profile image was saved.");
 
   }
-
-
-
 }
