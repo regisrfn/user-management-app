@@ -102,7 +102,7 @@
 
     <app-new-user-modal></app-new-user-modal>
 
-    <app-edit-user-modal [editUser]="selectedUser" (closed)="selectedUser=undefined"></app-edit-user-modal>
+    <app-edit-user-modal [editUser]="selectedUser"></app-edit-user-modal>
 
     <app-delete-warning (confirm)="deleteUser($event)" [isClosed]="!showDeleteModel">
         Delete: {{selectedUser?.firstName}} {{selectedUser?.lastName}} <br>

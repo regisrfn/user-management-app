@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onUpdateUser(user: User) {
-    this.selectedUser = Object.assign({}, user)
+    this.selectedUser = Object.assign({image:this.getUserImgUrl(user)}, user)
   }
 
   public deleteUser(event: { isConfirmed: boolean }) {
