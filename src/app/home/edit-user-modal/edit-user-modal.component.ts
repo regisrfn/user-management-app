@@ -25,7 +25,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
   loading = false;
   httpResponse: HttpResponse | undefined
   file: File | undefined
-  fileStatus = { percentage: 0, status: "progress" }
+  fileStatus = { percentage: 0, status: "start" }
   subscriptions: Subscription[] = []
 
   constructor(private notificationService: NotificationService,
@@ -102,6 +102,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
     this.formData = new FormData
     this.previewImgURL = undefined
     this.file = undefined
+    this.fileStatus = { percentage: 0, status: "start" }
   }
 
   public updateProfileImg() {
@@ -112,7 +113,6 @@ export class EditUserModalComponent implements OnInit, OnChanges {
       this.userService.updateProfileImage(this.formData, this.editUser.userId).subscribe(
         (event: HttpEvent<any>) => {
           this.handleUploadProgress(event)
-          console.log(event);
         },
         (err: HttpErrorResponse) => {
           let error = err.error as HttpResponse
@@ -150,6 +150,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
           this.fileStatus.status = "uploaded"
           this.unselectFiles()
           this.previewImgURL = this.editUser?.image + '?time=' + new Date().getTime()
+          this.fileStatus = { percentage: 0, status: "start" }
           this.sendSuccessfullyUpdatedMsg()
         }
         break;

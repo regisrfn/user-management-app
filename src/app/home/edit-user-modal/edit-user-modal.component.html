@@ -17,24 +17,25 @@
                                     <form #editUserForm="ngForm" class="tab-pane fade active show" id="account-general">
 
                                         <div class="card-body media align-items-center">
-                                            <label class="form-label">Profile image</label>
                                             <img [src]="previewImgURL" alt="" class="d-block ui-w-80 mb-1">
                                             <div class="media-body ml-4">
                                                 <label class="btn btn-outline-primary">
                                                     Choose image
-                                                    <input #inputFile type="file"
-                                                        class="account-settings-fileinput"
+                                                    <input #inputFile type="file" class="account-settings-fileinput"
                                                         (change)="selectFiles(inputFile)"
-                                                        accept="image/png, image/gif, image/jpeg"
-                                                        required>
+                                                        accept="image/png, image/gif, image/jpeg" required>
                                                 </label> &nbsp;
                                                 <button type="button" class="btn btn-default md-btn-flat"
                                                     (click)="unselectFiles()" [disabled]="!file">Reset
                                                 </button>
-                                                <button type="button" class="btn btn-primary"
-                                                    [disabled]="!file"
+                                                <button type="button" class="btn btn-primary" [disabled]="!file"
                                                     (click)="updateProfileImg()">Upload
                                                 </button>
+                                                <div *ngIf="fileStatus.status !== 'start'" class="progress mt-2"  style="height: 2rem;">
+                                                    <div class="progress-bar" role="progressbar" [ngStyle]="{'width.%': fileStatus.percentage}"
+                                                    [attr.aria-valuenow]="fileStatus.percentage" aria-valuemin="0" aria-valuemax="100">{{fileStatus.percentage}}%
+                                                </div>
+                                                </div>
                                                 <div class="text-light small mt-1">
                                                     Allowed JPG, GIF or PNG. Max size of
                                                     800K
@@ -126,7 +127,8 @@
                 </div>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     (click)="close()">Cancel</button>
-                <button type="button" class="btn btn-primary" [disabled]="editUserForm.invalid || (editUserForm.untouched && !editUserForm.dirty)"
+                <button type="button" class="btn btn-primary"
+                    [disabled]="editUserForm.invalid || (editUserForm.untouched && !editUserForm.dirty)"
                     (click)="save()">Save</button>
             </div>
         </div>
