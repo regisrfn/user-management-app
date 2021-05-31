@@ -64,7 +64,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
   public unselectFiles() {
     this.formData.delete('file')
     this.file = undefined
-    this.previewImgURL = this.editUser?.image
+    this.previewImgURL = this.editUser?.image + '?time=' + new Date().getTime()
   }
 
   public onSelectRole(selectInput: HTMLSelectElement) {
@@ -118,6 +118,7 @@ export class EditUserModalComponent implements OnInit, OnChanges {
           let error = err.error as HttpResponse
           this.sendErrorMsg(error.message)
           this.unselectFiles()
+          this.fileStatus = { percentage: 0, status: "start" }
         }
       )
     )
@@ -149,7 +150,6 @@ export class EditUserModalComponent implements OnInit, OnChanges {
         if (event.status === 200) {
           this.fileStatus.status = "uploaded"
           this.unselectFiles()
-          this.previewImgURL = this.editUser?.image + '?time=' + new Date().getTime()
           this.fileStatus = { percentage: 0, status: "start" }
           this.sendSuccessfullyUpdatedMsg()
         }
