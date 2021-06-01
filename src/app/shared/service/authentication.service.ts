@@ -2,6 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Storage } from '../const/storage';
+import { AuthorityType } from '../enum/authority-type.enum';
 import { User } from '../model/user.model';
 
 @Injectable({
@@ -10,9 +11,12 @@ import { User } from '../model/user.model';
 export class AuthenticationService {
 
   private token: string | undefined;
+  private loggedUser: User | undefined;
   @Output() loginEvent: EventEmitter<{ isLogged: boolean }> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    this.loggedUser = this.getUserFromLocalStorage()
+  }
 
   public login(user: User): Promise<HttpResponse<User>> {
     return this.http.post<User>(`${environment.API_URL}/login`, user, {
@@ -54,5 +58,21 @@ export class AuthenticationService {
 
   public geToken(): string | undefined {
     return this.token;
+  }
+
+  public checkUserDeleteAuthority(): string | undefined {
+    return this.loggedUser?.authorities?.find(authority => authority === AuthorityType.DELETE)
+  }
+
+  public checkUserUpdateAuthority(): string | undefined {
+    return this.loggedUser?.authorities?.find(authority => authority === AuthorityType.UPDATE)
+  }
+
+  public checkUserWriteAuthority(): string | undefined {
+    return this.loggedUser?.authorities?.find(authority => authority === AuthorityType.WRITE)
+  }
+
+  public checkUserReadAuthority(): string | undefined {
+    return this.loggedUser?.authorities?.find(authority => authority === AuthorityType.READ)
   }
 }

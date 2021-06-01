@@ -23,7 +23,7 @@
                     <div role="toolbar" class="btn-toolbar">
                         <div role="group" class="btn-group">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal"
+                            <button *ngIf="checkWriteAuthority()" type="button" class="btn btn-primary me-1" data-bs-toggle="modal"
                                 data-bs-target="#newUserModal">
                                 <i class="fas fa-plus"></i> User
                             </button>
@@ -38,7 +38,8 @@
                     <div class="card-header pb-0">
                         <div class="card-actions d-flex">
                             <h5 class="card-title mb-0">Users</h5>
-                            <div class="dropdown show ms-auto">
+                            <div class="dropdown show ms-auto"
+                            *ngIf="checkDeleteAuthority() || checkUpdateAuthority()">
                                 <a href="#" data-bs-toggle="dropdown" data-display="static">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -80,9 +81,9 @@
                                         <span *ngIf="!user.active" class="badge bg-danger">Inactive</span>
                                     </td>
                                     <td *ngIf="editMode">
-                                        <span class="fas fa-trash text-danger" (click)="confirmDelete(user)">
+                                        <span *ngIf="checkDeleteAuthority()" class="fas fa-trash text-danger" (click)="confirmDelete(user)">
                                         </span>
-                                        <span class="fas fa-edit ms-3" data-bs-toggle="modal"
+                                        <span  *ngIf="checkUpdateAuthority()" class="fas fa-edit ms-3" data-bs-toggle="modal"
                                             data-bs-target="#editUserModal" (click)="onUpdateUser(user)">
                                         </span>
                                     </td>

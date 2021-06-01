@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { environment } from 'src/environments/environment';
+import { AuthorityType } from '../shared/enum/authority-type.enum';
 import { NotificationType } from '../shared/enum/notification-type.enum';
 import { HttpResponse } from '../shared/model/http-response.model';
 import { User } from '../shared/model/user.model';
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
   showDeleteModel = false
   isDeleting = false
   time = new Date().getTime()
+  currentUser: User | undefined
 
   constructor(private userService: UserService,
     private notificationService: NotifierService,
@@ -60,13 +62,13 @@ export class HomeComponent implements OnInit {
   }
 
   public showUserInfo(user: User) {
-    this.selectedUser = Object.assign({image:this.getUserImgUrl(user)}, user)
+    this.selectedUser = Object.assign({ image: this.getUserImgUrl(user) }, user)
     let btn = this.userInfoBtn?.nativeElement as HTMLButtonElement
     btn?.click()
   }
 
   public onUpdateUser(user: User) {
-    this.selectedUser = Object.assign({image:this.getUserImgUrl(user)}, user)
+    this.selectedUser = Object.assign({ image: this.getUserImgUrl(user) }, user)
   }
 
   public deleteUser(event: { isConfirmed: boolean }) {
@@ -95,6 +97,18 @@ export class HomeComponent implements OnInit {
   public getUserImgUrl = (user: User): string => {
     let url = this.imageUrl + user.userId + '?time=' + this.time
     return url
+  }
+
+  public checkDeleteAuthority(): string | undefined {
+    return this.authService.checkUserDeleteAuthority()
+  }
+
+  public checkUpdateAuthority(): string | undefined {
+    return this.authService.checkUserUpdateAuthority()
+  }
+
+  public checkWriteAuthority(): string | undefined {
+    return this.authService.checkUserWriteAuthority()
   }
 
   private sendErrorMsg(message: string) {
