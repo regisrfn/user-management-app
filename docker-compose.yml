@@ -1,0 +1,7 @@
+version: "3.9"
+services: 
+    frontend:
+        image: regisrufino/authentication-front:latest
+        ports: 
+            - "80:4200"
+        restart: always
