@@ -14,7 +14,7 @@ export class AuthenticationService {
   private loggedUser: User | undefined;
   @Output() loginEvent: EventEmitter<{ isLogged: boolean }> = new EventEmitter();
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.loggedUser = this.getUserFromLocalStorage()
   }
 
@@ -57,7 +57,8 @@ export class AuthenticationService {
   }
 
   public loadUser() {
-    let user = JSON.parse(localStorage.getItem(Storage.USER) || "") as User
+    let userJSON = localStorage.getItem(Storage.USER)
+    let user = userJSON ? JSON.parse(userJSON) as User : undefined
     this.loggedUser = user ? user : undefined;
   }
 
