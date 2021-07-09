@@ -56,6 +56,11 @@ export class AuthenticationService {
     this.token = jwtToken ? jwtToken : undefined;
   }
 
+  public loadUser() {
+    let user = JSON.parse(localStorage.getItem(Storage.USER) || "") as User
+    this.loggedUser = user ? user : undefined;
+  }
+
   public geToken(): string | undefined {
     return this.token;
   }

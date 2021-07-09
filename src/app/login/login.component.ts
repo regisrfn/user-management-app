@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.loadToken()
+    this.authService.loadUser()
     if (this.authService.geToken())
       this.router.navigateByUrl("/");
     else
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
           this.authService.storageToken(token);
           this.authService.storageUser(res.body);
           this.authService.loadToken();
+          this.authService.loadUser();
           this.authService.loginEvent.emit({ isLogged: true })
           this.router.navigate(['/']);
         }
