@@ -30,4 +30,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 docker build . -t regisrufino/authentication-front:latest 
 
 ## Build e run docker container
-docker run --name authentication_front -p 5020:4200 regisrufino/authentication-front
+docker run --name authentication_front -p 4200:4200 regisrufino/authentication-front
